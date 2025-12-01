@@ -2,10 +2,13 @@ from fastapi import FastAPI, HTTPException
 from typing import List, Dict
 from app.models.models import Item, ItemBase
 
+
 app = FastAPI(title="API CRUD básica con FastAPI")
+
 
 db: Dict[int, Item] = {}
 next_id: int = 1
+
 
 @app.get("/")
 def root():
