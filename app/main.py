@@ -1,6 +1,6 @@
 from fastapi import FastAPI, HTTPException
 from typing import List, Dict
-from models.models import Item, ItemBase
+from .models.models import Item, ItemBase
 
 app = FastAPI(title="API CRUD básica con FastAPI")
 
