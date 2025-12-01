@@ -1,0 +1,43 @@
+# Python
+__pycache__
+**/__pycache__/
+*/__pycache__/
+./__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Entornos virtuales
+.env
+.venv
+env/
+venv/
+ENV/
+
+# Cache de pytest
+.pytest_cache/
+
+# Coverage
+.coverage
+.coverage.*
+htmlcov/
+
+# mypy
+.mypy_cache/
+
+# Distribución/paquetes
+build/
+dist/
+*.egg-info/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Sistema
+.DS_Store
+Thumbs.db
