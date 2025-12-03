@@ -5,6 +5,7 @@ import os
 from datetime import datetime
 import psutil
 
+
 app = FastAPI(title="API CRUD básica con FastAPI")
 
 
@@ -67,6 +68,6 @@ async def health_check():
         "system": {
             "cpu_percent": psutil.cpu_percent(),
             "memory_percent": psutil.virtual_memory().percent,
-            "disk_usage": psutil.disk_usage('/').percent
-        }
+            "disk_usage": psutil.disk_usage("/").percent,
+        },
     }
