@@ -250,10 +250,16 @@ jobs:
           ignore-unfixed: true  # Ignorar vulnerabilidades sin fix
 
       - name: Run Trivy for Dockerfile scanning
-        if: success() || failure()  # Siempre ejecutar
+        if: success() || failure()
         run: |
-          # Escanear Dockerfile si existe
-          if [ -f "Dockerfile" ]; then
+          # Buscar cualquier Dockerfile en el proyecto
+          echo "Searching for Dockerfiles..."
+          find . -name "Dockerfile" -type f
+          
+          DOCKERFILE_COUNT=$(find . -name "Dockerfile" -type f | wc -l)
+          
+          if [ "$DOCKERFILE_COUNT" -gt 0 ]; then
+            echo "Found $DOCKERFILE_COUNT Dockerfile(s)"
             docker run --rm \
               -v /var/run/docker.sock:/var/run/docker.sock \
               -v $(pwd):/src \
@@ -261,19 +267,18 @@ jobs:
               config /src --severity HIGH,CRITICAL \
               --format sarif \
               --output trivy-config-results.sarif
+          else
+            echo "No Dockerfiles found in the project"
           fi
 
-      - name: Upload Trivy scan results to GitHub Security tab
-        uses: github/codeql-action/upload-sarif@v3
-        with:
-          sarif_file: 'trivy-results.sarif'
-          wait-for-processing: true
 
       - name: Upload Dockerfile scan results
         if: success() || failure()
         uses: github/codeql-action/upload-sarif@v3
         with:
           sarif_file: 'trivy-config-results.sarif'
+          wait-for-processing: true
+        continue-on-error: true  # Permite que el workflow continúe si no hay archivo
 
 
   notify:
